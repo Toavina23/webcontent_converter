@@ -343,15 +343,16 @@ class WebcontentConverter {
   ///     margins: PdfMargins.px(top: 55, bottom: 55, right: 55, left: 55),
   /// );
   /// ```
-  static Future<String?> contentToPDF({
-    required String content,
-    double duration: 2000,
-    required String savedPath,
-    PdfMargins? margins,
-    PaperFormat format: PaperFormat.a4,
-    String? executablePath,
-    bool autoClosePage = true,
-  }) async {
+  static Future<String?> contentToPDF(
+      {required String content,
+      double duration: 2000,
+      required String savedPath,
+      PdfMargins? margins,
+      PaperFormat format: PaperFormat.a4,
+      String? executablePath,
+      bool autoClosePage = true,
+      bool landscapeOriented = false,
+      num scale = 100}) async {
     PdfMargins _margins = margins ?? PdfMargins.zero;
     final Map<String, dynamic> arguments = {
       'content': content,
@@ -389,6 +390,8 @@ class WebcontentConverter {
             width: format.width,
             height: format.height,
           ),
+          scale: scale,
+          landscape: landscapeOriented,
           margins: pp.PdfMargins.inches(
             top: _margins.top,
             bottom: _margins.bottom,
